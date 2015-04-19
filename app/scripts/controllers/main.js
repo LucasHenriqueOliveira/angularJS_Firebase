@@ -14,6 +14,14 @@ angular.module('angularJsFirebaseApp')
 
     childRef.on('value', function(snapshot){
       $timeout(function(){
+        snapshot.forEach(function(item) {
+          console.log(item.name() + ' - ' + item.val());
+          console.log(item.ref());
+        });
+        // console.log(snapshot.hasChildren());
+        // console.log(snapshot.hasChild('text'));
+        // console.log(snapshot.name());
+        // console.log(snapshot.numChildren());
         var snapshotVal = snapshot.val();
         console.log(snapshotVal);
         $scope.message = snapshotVal;
