@@ -10,23 +10,33 @@
 angular.module('angularJsFirebaseApp')
   .controller('MainCtrl', function ($scope, $timeout) {
     var rootRef = new Firebase('https://glowing-torch-4779.firebaseio.com/');
-    var childRef = rootRef.child('message');
+    var messagesRef = rootRef.child('messages');
 
-    childRef.on('value', function(snapshot){
+    $scope.currentUser = null;
+    $scope.currentText = null;
+
+    messagesRef.on('value', function(snapshot){
       $timeout(function(){
-        snapshot.forEach(function(item) {
-          console.log(item.name() + ' - ' + item.val());
-          console.log(item.ref());
-        });
         // console.log(snapshot.hasChildren());
         // console.log(snapshot.hasChild('text'));
         // console.log(snapshot.name());
         // console.log(snapshot.numChildren());
         var snapshotVal = snapshot.val();
-        console.log(snapshotVal);
-        $scope.message = snapshotVal;
+        $scope.messages = snapshotVal;
       });
     });
+
+    $scope.sendMessage = function(){
+      var newMessage = {
+        user: $scope.currentUser,
+        text: $scope.currentText
+      };
+
+      messagesRef.push(newMessage);
+    }
+
+
+    /*
 
     $scope.$watch('message.text', function(newVal) {
       if(!newVal){
@@ -54,4 +64,6 @@ angular.module('angularJsFirebaseApp')
     $scope.deleteMessage = function() {
       childRef.remove();
     }
+
+    */
   });
