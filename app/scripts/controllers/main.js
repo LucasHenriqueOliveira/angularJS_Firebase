@@ -14,15 +14,16 @@ angular.module('angularJsFirebaseApp')
 
     $scope.currentUser = null;
     $scope.currentText = null;
+    $scope.messages = [];
 
-    messagesRef.on('value', function(snapshot){
+    messagesRef.on('child_added', function(snapshot){
       $timeout(function(){
         // console.log(snapshot.hasChildren());
         // console.log(snapshot.hasChild('text'));
         // console.log(snapshot.name());
         // console.log(snapshot.numChildren());
         var snapshotVal = snapshot.val();
-        $scope.messages = snapshotVal;
+        $scope.messages.push(snapshotVal);
       });
     });
 
