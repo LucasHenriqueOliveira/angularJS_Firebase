@@ -30,4 +30,6 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+
+  .constant('FBURL', 'https://glowing-torch-4779.firebaseio.com/');
