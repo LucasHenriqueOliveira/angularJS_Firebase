@@ -2,12 +2,14 @@
   'use strict';
 
   angular.module('angularJsFirebaseApp')
-    .service('MessageService', function (FBURL, $q) {
+    .service('MessageService', function (FBURL, $q, $firebaseArray) {
       var messageRef = new Firebase(FBURL).child('messages');
-      return {
-        childAdded: function childAdded(limitNumber, cb) {
+      var fireMessage = $firebaseArray(messageRef);
 
-          messageRef.startAt().limitToFirst(limitNumber).on('child_added', function(snapshot) {
+      return {
+        childAdded: function childAdded(cb) {
+
+          messageRef.on('child_added', function(snapshot) {
             var val = snapshot.val();
             cb.call(this, {
               user: val.user,
@@ -16,13 +18,15 @@
             });
           });
         },
+
         add: function addMessage(message){
-          messageRef.push(message);
+          return fireMessage.$add(message);
         },
+        
         off: function turnMessagesOff(){
           messageRef.off();
         },
-        
+
         pageNext: function pageNext(name, numberOfItems){
           var deferred = $q.defer();
           var messages = [];

@@ -18,10 +18,8 @@ angular.module('angularJsFirebaseApp')
     $scope.messages = [];
 
 
-    MessageService.childAdded(10, function(addedChild) {
-      $timeout(function(){
-        $scope.messages.push(addedChild);
-      });
+    MessageService.childAdded(function(addedChild) {
+      $scope.messages.push(addedChild);
     });
 
     messagesRef.on('child_changed', function(snapshot){
@@ -67,7 +65,10 @@ angular.module('angularJsFirebaseApp')
         text: $scope.currentText
       };
 
-      MessageService.add(newMessage);
+      var promise = MessageService.add(newMessage);
+      promise.then(function(data) {
+        console.log(data.key());
+      });
     }
 
     $scope.turnFeedOff = function() {
