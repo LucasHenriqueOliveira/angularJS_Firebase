@@ -16,7 +16,9 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'firebase'
+    'firebase',
+    'routeSecurity',
+    'simpleLoginTools'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -26,7 +28,8 @@ angular
       })
       .when('/chat', {
         templateUrl: 'views/chat.html',
-        controller: 'ChatCtrl'
+        controller: 'ChatCtrl',
+        authRequired: true
       })
       .when('/login', {
         templateUrl: 'views/login.html',
@@ -46,4 +49,5 @@ angular
   })
 
   .constant('FBURL', 'https://glowing-torch-4779.firebaseio.com/')
-  .constant('MSGURL', 'https://glowing-torch-4779.firebaseio.com/messages');
+  .constant('MSGURL', 'https://glowing-torch-4779.firebaseio.com/messages')
+  .constant('loginRedirectPath', '/login');
