@@ -24,13 +24,26 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+      .when('/chat', {
+        templateUrl: 'views/chat.html',
+        controller: 'ChatCtrl'
+      })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
+      })
+      .when('/register', {
+        templateUrl: 'views/register.html',
+        controller: 'RegisterCtrl'
+      })
+      .when('/logout', {
+        template: 'Logging out...',
+        controller: 'LogoutCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
   })
 
-  .constant('FBURL', 'https://glowing-torch-4779.firebaseio.com/');
+  .constant('FBURL', 'https://glowing-torch-4779.firebaseio.com/')
+  .constant('MSGURL', 'https://glowing-torch-4779.firebaseio.com/messages');

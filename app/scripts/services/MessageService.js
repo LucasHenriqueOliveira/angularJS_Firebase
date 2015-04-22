@@ -9,7 +9,7 @@
       return {
         childAdded: function childAdded(cb) {
 
-          messageRef.on('child_added', function(snapshot) {
+          messageRef.startAt().limitToFirst(10).on('child_added', function(snapshot) {
             var val = snapshot.val();
             cb.call(this, {
               user: val.user,
@@ -22,7 +22,7 @@
         add: function addMessage(message){
           return fireMessage.$add(message);
         },
-        
+
         off: function turnMessagesOff(){
           messageRef.off();
         },
